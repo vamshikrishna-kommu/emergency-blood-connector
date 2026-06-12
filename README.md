@@ -7,9 +7,8 @@
 
 A full-stack MERN web application that connects blood donors with patients and hospitals during medical emergencies. Built as an individual capstone project.
 
-> **Live Demo:** *(Deploy using the [Deployment Guide](DEPLOYMENT_GUIDE.md) and add your URLs here)*  
-> **Backend API:** `https://your-api.onrender.com`  
-> **Frontend App:** `https://your-app.vercel.app`
+> **Live Demo:** `https://emergency-blood-connector-three.vercel.app`  
+> **Backend API:** `https://emergency-blood-connector-cg8f.onrender.com`
 
 ---
 
@@ -48,7 +47,7 @@ The platform connects three types of users:
 | Database | MongoDB Atlas, Mongoose 9 |
 | Auth | JWT in HTTP-only cookies |
 | Password | bcryptjs (12 salt rounds) |
-| Security | Helmet, express-rate-limit, express-mongo-sanitize |
+| Security | Helmet, express-rate-limit |
 
 ---
 
@@ -56,10 +55,7 @@ The platform connects three types of users:
 
 ```
 emergency_blood_connector/
-├── render.yaml               ← Render deployment configuration
 ├── .gitignore
-├── PROJECT_AUDIT.md          ← Full codebase audit report
-├── DEPLOYMENT_GUIDE.md       ← Step-by-step deployment guide
 ├── backend/
 │   ├── .env.example          ← Environment variable template
 │   ├── server.js             ← Express app entry point
@@ -74,9 +70,6 @@ emergency_blood_connector/
 │       ├── requestRoutes.js  ← /api/requests/* (CRUD)
 │       └── adminRoutes.js    ← /api/admin/* (stats, user & request management)
 └── frontend/
-    ├── vercel.json           ← Vercel SPA routing
-    ├── public/
-    │   └── _redirects        ← Netlify SPA routing
     ├── .env.example          ← Frontend env template
     ├── vite.config.js        ← Vite + dev proxy config
     └── src/
@@ -163,12 +156,13 @@ npm run dev   # starts at http://localhost:5173
 
 ## Deployment
 
-See the full **[Deployment Guide](DEPLOYMENT_GUIDE.md)** for step-by-step instructions.
+The application is deployed manually using the following setup:
 
-**Quick summary:**
-- **Backend** → Deploy `backend/` to [Render](https://render.com) (using `render.yaml`)
-- **Frontend** → Deploy `frontend/` to [Vercel](https://vercel.com)
-- **Database** → [MongoDB Atlas](https://cloud.mongodb.com) M0 free cluster
+- **Database:** MongoDB Atlas (M0 Free Tier)
+- **Backend:** Deployed manually on [Render](https://render.com) using the `backend` root directory.
+- **Frontend:** Deployed manually on [Vercel](https://vercel.com) using the Vite framework preset and `frontend` root directory.
+
+*Note: Environment variables (`FRONTEND_URL`, `DB_URL`, `SECRET_KEY`, `VITE_API_URL`) must be configured securely on the respective deployment platforms.*
 
 ---
 
@@ -202,7 +196,6 @@ See the full **[Deployment Guide](DEPLOYMENT_GUIDE.md)** for step-by-step instru
 | Password Storage | **bcrypt** with 12 salt rounds |
 | Brute Force | **express-rate-limit** — 15 requests per 15 minutes on auth routes |
 | HTTP Headers | **Helmet** — sets X-Frame-Options, CSP, HSTS, and more |
-| NoSQL Injection | **express-mongo-sanitize** — strips `$` operators from inputs |
 | RBAC | Role checks enforced on **both** frontend (route guards) and backend (middleware) |
 | Ownership | Receivers can only edit/delete **their own** requests |
 | Input Validation | Server-side email regex, date validation, bcrypt hash verification |
